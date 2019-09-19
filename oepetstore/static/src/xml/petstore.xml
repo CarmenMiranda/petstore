@@ -19,4 +19,22 @@
             </t>
         </div>
     </t>
+    <t t-name="ColorInputWidget">
+        <div class="container-fluid row">
+            <div class="col-4">
+                Red: <input type="text" class="oe_color_red" value="00"></input>
+            </div>
+            <div class="col-4">
+                Green: <input type="text" class="oe_color_green" value="00"></input>
+            </div>
+            <div class="col-4">
+                Blue: <input type="text" class="oe_color_blue" value="00"></input>
+            </div>
+        </div>
+    </t>
+    <t t-name="HomePage">
+        <div>
+            <div class="oe_color_div mx-auto"></div>
+        </div>
+    </t>
 </templates>

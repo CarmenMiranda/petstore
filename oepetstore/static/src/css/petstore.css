@@ -5,3 +5,9 @@
     border: 1px solid black;
     border-radius: 3px;
 }
+
+.oe_color_div {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}

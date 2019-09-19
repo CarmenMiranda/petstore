@@ -20,10 +20,30 @@ odoo.define("oepetstore", function(require){
 
             // First way to use a template
             // this.$el.append(QWeb.render("HomePageTemplate", {name: "Klaus"}));
-            var products = new ProductsWidget(this,
-                ['cpu', 'mouse', 'keyboard', 'graphic card', 'screen'], "#00FF00");
-            products.appendTo(this.$el);
+            // var products = new ProductsWidget(this,
+            //     ['cpu', 'mouse', 'keyboard', 'graphic card', 'screen'], "#00FF00");
+            // products.appendTo(this.$el);
+
+            // var confirmWidget = new ConfirmWidget(this);
+            // confirmWidget.on("user_chose", this, this.user_chose);
+            // confirmWidget.appendTo(this.$el);
+            //
+            this.$el.append(QWeb.render("HomePage"));
+            this.colorInput = new ColorInputWidget(this);
+            this.colorInput.on("change:color", this, this.color_changed);
+            return this.colorInput.appendTo(this.$el);
         },
+        color_changed: function () {
+            this.$(".oe_color_div").css("background-color", this.colorInput.get("color"));
+        }
+        // user_chose: function(confirm) {
+        //     // console.log(confirm ? "The user agreed to continue" : "The user refused to continue");
+        //     if (confirm) {
+        //         console.log("The user agreed to continue");
+        //     } else {
+        //         console.log("The user refused to continue");
+        //     }
+        // },
     });
 
     // Second way to use a template
@@ -51,6 +71,42 @@ odoo.define("oepetstore", function(require){
             this._super(parent);
             this.products = products;
             this.color = color;
+        },
+    });
+
+    var ConfirmWidget = Widget.extend({
+        events: {
+            'click button.ok_button': function () {
+                this.trigger('user_chose', true);
+            },
+            'click button.cancel_button': function () {
+                this.trigger('user_chose', false);
+            }
+        },
+        start: function() {
+            this.$el.append("<div>Are you sure you want to perform this action?</div>" +
+                "<button class='ok_button'>Ok</button>" +
+                "<button class='cancel_button'>Cancel</button>");
+        },
+    });
+
+    var ColorInputWidget = Widget.extend({
+        template: "ColorInputWidget",
+        events: {
+             'change input': 'input_changed',
+        },
+        start: function () {
+            this.input_changed();
+            return this._super();
+        },
+        input_changed: function () {
+            var color = [
+                "#",
+                this.$(".oe_color_red").val(),
+                this.$(".oe_color_green").val(),
+                this.$(".oe_color_blue").val()
+            ].join('');
+            this.set("color", color);
         },
     });
 });
