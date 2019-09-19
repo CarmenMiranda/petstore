@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data>
         <template id="assets_backend" name="petstore_assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
@@ -13,18 +13,17 @@
         <menuitem id="petstore_menu" name="Pet Store"
             parent="main_petstore_menu" />
 
-        <record id="action_home_page" model="ir.actions.client">
-            <field name="name">Pet Store Home</field>
-            <field name="tag">petstore.homepage</field>
-        </record>
+        <!-- <record id="action_home_page" model="ir.actions.client"> -->
+        <!--     <field name="name">Pet Store Home</field> -->
+        <!--     <field name="tag">oepetstore.homepage</field> -->
+        <!-- </record> -->
 
-        <menuitem id="home_page_petstore_menu" name="Home Page" parent="petstore_menu"
-            action="action_home_page"/>
+        <!-- <menuitem id="home_page_petstore_menu" name="Home Page" parent="petstore_menu" -->
+        <!--     action="action_home_page"/> -->
 
         <record model="ir.ui.view" id="message_of_the_day_tree">
             <field name="name">message_of_the_day_tree</field>
             <field name="model">oepetstore.message_of_the_day</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Message of the day">
                     <field name="message"/>
@@ -35,7 +34,6 @@
         <record model="ir.ui.view" id="message_of_the_day_form">
             <field name="name">message_of_the_day_form</field>
             <field name="model">oepetstore.message_of_the_day</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Message of the day">
                     <group>
@@ -76,4 +74,4 @@
         <menuitem id="pet_toys_action_menu" name="Pet Toys" parent="petstore_menu"
             action="pet_toys_action"/>
     </data>
-</openerp>
+</odoo>
