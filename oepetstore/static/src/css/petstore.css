@@ -43,3 +43,7 @@
     border-radius: 3px;
     background-color: #F0EEEE;
 }
+
+.oe_petstore_pettoy:hover {
+    cursor: pointer;
+}

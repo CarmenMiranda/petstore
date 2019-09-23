@@ -15,3 +15,10 @@ class oepetstore(http.Controller):
         return http.request.render('oepetstore.PetToysList', {
             'petToys': petToys.search([('categ_id.name', '=', "Pet Toys")]),
         })
+
+    @http.route('/oepetstore/pettoy', auth='public')
+    def petToy(self, petId, **kw):
+        petToy = http.request.env['product.product']
+        return http.request.render('oepetstore.PetToy', {
+            'petToy': petToy.search([('id', '=', petId)]),
+        })

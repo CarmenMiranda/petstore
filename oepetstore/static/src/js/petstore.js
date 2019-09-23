@@ -135,12 +135,25 @@ odoo.define("oepetstore", function(require){
     });
 
     var PetToysList = Widget.extend({
+        events: {
+            'click .oe_petstore_pettoy': 'selected_item',
+        },
         start: function() {
             var self = this;
             ajax.post('/oepetstore/pettoylist', self).then(function(view) {
                 self.$el.append(view);
             })
             return
+        },
+        selected_item: function (event) {
+            var self = this;
+            var data = $(event.currentTarget)[0].id;
+            ajax.post('/oepetstore/pettoy', {petId: parseInt(data)}).then(function(view) {
+                $('.oe_petstore_homepage').html(view);
+                // self.$el.load(view);
+                // self.$el.append(view);
+            })
+
         }
     });
 });
