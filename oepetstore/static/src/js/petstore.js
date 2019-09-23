@@ -6,7 +6,8 @@ odoo.define("oepetstore", function(require){
     const _t = translation._t,
         QWeb = core.qweb,
         Widget = require('web.Widget'),
-        AbstractAction = require('web.AbstractAction');
+        AbstractAction = require('web.AbstractAction'),
+        ajax = require('web.ajax');
 
 
     // console.log("pet store home page loaded");
@@ -31,7 +32,19 @@ odoo.define("oepetstore", function(require){
             this.$el.append(QWeb.render("HomePage"));
             this.colorInput = new ColorInputWidget(this);
             this.colorInput.on("change:color", this, this.color_changed);
-            return this.colorInput.appendTo(this.$el);
+            this.colorInput.appendTo(this.$el);
+            var self = this;
+            this._rpc({
+                model: "oepetstore.message_of_the_day",
+                method: "my_method",
+            }).then(function (result) {
+                self.$el.append("<div>Hello " + result["hello"] + "</div>");
+            });
+            this.messageOfTheDay = new MessageOfTheDay(this);
+            this.messageOfTheDay.appendTo(this.$el);
+            this.petToysList = new PetToysList(this);
+            this.petToysList.appendTo(this.$el);
+            return
         },
         color_changed: function () {
             this.$(".oe_color_div").css("background-color", this.colorInput.get("color"));
@@ -108,5 +121,26 @@ odoo.define("oepetstore", function(require){
             ].join('');
             this.set("color", color);
         },
+    });
+
+    // Exercises
+    var MessageOfTheDay = Widget.extend({
+        start: function() {
+            var self = this;
+            ajax.post('/oepetstore/messages', self).then(function(view) {
+                self.$el.append(view);
+            })
+            return
+        }
+    });
+
+    var PetToysList = Widget.extend({
+        start: function() {
+            var self = this;
+            ajax.post('/oepetstore/pettoylist', self).then(function(view) {
+                self.$el.append(view);
+            })
+            return
+        }
     });
 });

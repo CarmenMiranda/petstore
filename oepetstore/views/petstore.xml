@@ -73,5 +73,24 @@
 
         <menuitem id="pet_toys_action_menu" name="Pet Toys" parent="petstore_menu"
             action="pet_toys_action"/>
+
+        <template name="MessageOfTheDay" id="MessageOfTheDay">
+            <div class="oe_petstore_motd p-4">
+                <t t-foreach="messages" t-as="message">
+                    <p class="oe_mywidget_message_of_the_day"> <t t-esc="message.message"/></p>
+                </t>
+            </div>
+        </template>
+
+        <template name="PetToysList" id="PetToysList">
+            <div class="oe_petstore_pettoyslist_motd p-4">
+                <t t-foreach="petToys" t-as="pet">
+                    <div class="oe_petstore_pettoy">
+                        <p><t t-esc="pet.name"/></p>
+                        <p><img t-attf-src="data:image/jpg;base64,{{pet.image}}"/></p>
+                    </div>
+                </t>
+            </div>
+        </template>
     </data>
 </odoo>
