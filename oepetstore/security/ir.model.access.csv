@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_oepetstore_message_of_the_day,access_oepetstore_message_of_the_day,model_oepetstore_message_of_the_day,base.group_user,1,0,0,0
+access_oepetstore_message_of_the_day,access_oepetstore_message_of_the_day,model_oepetstore_message_of_the_day,base.group_user,1,1,1,0

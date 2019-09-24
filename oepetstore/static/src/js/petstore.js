@@ -2,12 +2,14 @@ odoo.define("oepetstore", function(require){
     'use strict';
 
     var translation = require('web.translation'),
-        core = require('web.core');
+        core = require('web.core'),
+        field_registry = require('web.field_registry');
     const _t = translation._t,
         QWeb = core.qweb,
         Widget = require('web.Widget'),
         AbstractAction = require('web.AbstractAction'),
-        ajax = require('web.ajax');
+        ajax = require('web.ajax'),
+        AbstractField = require('web.AbstractField');
 
 
     // console.log("pet store home page loaded");
@@ -156,4 +158,39 @@ odoo.define("oepetstore", function(require){
 
         }
     });
+
+    var FieldColor = AbstractField.extend({
+        events: {
+            'change input': function (e) {
+                if ($(e.currentTarget).parents('.o_form_readonly').length == 0) {
+                    this.value = $(e.currentTarget).val();
+                    this.render_value();
+                }
+            },
+        },
+        init: function() {
+            this._super.apply(this, arguments);
+            this.value ="#000000";
+        },
+        start: function() {
+            this.render_value();
+            this.display_field();
+            return this._super();
+        },
+        display_field: function() {
+            var self = this;
+            this.$el.html(QWeb.render("FieldColor", {widget: this}));
+        },
+        render_value: function() {
+            if (this.getParent().mode == 'readonly') {
+                // This isn't working as expected
+                this.$(".oe_field_color_content").css("background-color", this.value);
+            } else {
+                // This isn't working as expected
+                this.$("input").val(this.value);
+            }
+        }
+    });
+
+    field_registry.add('color', FieldColor);
 });

@@ -43,4 +43,14 @@
             <p><img t-attf-src="data:image/jpg;base64,{{pet.image}}"/></p>
         </div>
     </t>
+    <t t-name="FieldColor">
+        <div class="oe_field_color">
+            <t t-if="widget.getParent().mode == 'readonly'">
+                <div class="oe_field_color_content" />
+            </t>
+            <t t-if="widget.getParent().mode != 'readonly'">
+                <input type="color"></input>
+            </t>
+        </div>
+    </t>
 </templates>

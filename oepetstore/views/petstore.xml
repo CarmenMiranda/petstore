@@ -38,6 +38,7 @@
                 <form string="Message of the day">
                     <group>
                         <field name="message" colspan="4"/>
+                        <field name="color" widget="color"/>
                     </group>
                 </form>
             </field>
