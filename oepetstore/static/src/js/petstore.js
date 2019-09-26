@@ -3,7 +3,9 @@ odoo.define("oepetstore", function(require){
 
     var translation = require('web.translation'),
         core = require('web.core'),
-        field_registry = require('web.field_registry');
+        field_registry = require('web.field_registry'),
+        FieldManagerMixin = require('web.FieldManagerMixin'),
+        widgetRegistry = require('web.widget_registry');
     const _t = translation._t,
         QWeb = core.qweb,
         Widget = require('web.Widget'),
@@ -46,10 +48,19 @@ odoo.define("oepetstore", function(require){
             this.messageOfTheDay.appendTo(this.$el);
             this.petToysList = new PetToysList(this);
             this.petToysList.appendTo(this.$el);
+            this.WidgetCoordinates = new WidgetCoordinates(this);
+            this.WidgetCoordinates.appendTo(this.$el)
+            this.WidgetCoordinates.on("change:coordinates", this, this.display_map);
             return
         },
         color_changed: function () {
             this.$(".oe_color_div").css("background-color", this.colorInput.get("color"));
+        },
+        display_map: function() {
+             this.$el.html(QWeb.render("WidgetCoordinatesMap", {
+                "latitude": this.coordinates.latitude,
+                "longitude": this.coordinates.longitude,
+            }));
         }
         // user_chose: function(confirm) {
         //     // console.log(confirm ? "The user agreed to continue" : "The user refused to continue");
@@ -193,4 +204,23 @@ odoo.define("oepetstore", function(require){
     });
 
     field_registry.add('color', FieldColor);
+
+    var WidgetCoordinates = Widget.extend({
+        template: "WidgetCoordinates",
+        events: {
+            'change input': 'get_coordinates',
+        },
+        start: function() {
+            this.get_coordinates();
+            return this._super();
+        },
+        get_coordinates: function() {
+            var coordinates = {
+                "latitude": this.$(".oe_coordinate_latitude").val(),
+                "longitude": this.$(".oe_coordinate_longitude").val(),
+            }
+            this.set("coordinates", coordinates)
+        }
+    });
+    widgetRegistry.add('coordinates', WidgetCoordinates);
 });

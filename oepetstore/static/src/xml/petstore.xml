@@ -53,4 +53,20 @@
             </t>
         </div>
     </t>
+
+    <t t-name="WidgetCoordinates">
+        <div class="container-fluid row">
+            <div class="col-6">
+                Latitude: <input type="text" class="oe_coordinate_latitude"></input>
+            </div>
+            <div class="col-6">
+                Longitude: <input type="text" class="oe_coordinate_longitude"></input>
+            </div>
+        </div>
+    </t>
+    <t t-name="WidgetCoordinatesMap">
+        <iframe width="400" height="300"
+            t-attf-src="https://maps.google.com/?ie=UTF8&amp;ll={{latitude}},{{longitude}}&amp;output=embed">
+        </iframe>
+    </t>
 </templates>
